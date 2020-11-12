@@ -422,24 +422,55 @@ public class CalculatorFrame {
 				String number = "" + e.getKeyChar();
 
 				System.out.println(number);
-				if ( key == KeyEvent.VK_0||key == KeyEvent.VK_NUMPAD0 || key == KeyEvent.VK_1 || key == KeyEvent.VK_NUMPAD1
-						|| key == KeyEvent.VK_2 || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_3
-						|| key == KeyEvent.VK_NUMPAD3 || key == KeyEvent.VK_4 || key == KeyEvent.VK_NUMPAD4
-						|| key == KeyEvent.VK_5 || key == KeyEvent.VK_NUMPAD5 || key == KeyEvent.VK_6
-						|| key == KeyEvent.VK_NUMPAD6 || key == KeyEvent.VK_8 || key == KeyEvent.VK_NUMPAD7
-						|| key == KeyEvent.VK_7 || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_9
-						|| key == KeyEvent.VK_NUMPAD9) {
+				if (key == KeyEvent.VK_0 || key == KeyEvent.VK_NUMPAD0 || key == KeyEvent.VK_1
+						|| key == KeyEvent.VK_NUMPAD1 || key == KeyEvent.VK_2 || key == KeyEvent.VK_NUMPAD2
+						|| key == KeyEvent.VK_3 || key == KeyEvent.VK_NUMPAD3 || key == KeyEvent.VK_4
+						|| key == KeyEvent.VK_NUMPAD4 || key == KeyEvent.VK_5 || key == KeyEvent.VK_NUMPAD5
+						|| key == KeyEvent.VK_6 || key == KeyEvent.VK_NUMPAD6 || key == KeyEvent.VK_8
+						|| key == KeyEvent.VK_NUMPAD7 || key == KeyEvent.VK_7 || key == KeyEvent.VK_NUMPAD8
+						|| key == KeyEvent.VK_9 || key == KeyEvent.VK_NUMPAD9) {
 
 					try {
-						
+
 						if (Integer.parseInt(number) >= 0 || Integer.parseInt(number) <= 9) {
 							calculate.addNumber(calcul_display, number);
 						}
-						
+
 					} catch (Exception e2) {
 						// TODO: handle exception
 					}
-					
+
+				} else {
+					System.out.println(key + "et" + KeyEvent.VK_ADD);
+					switch (key) {
+					case KeyEvent.VK_ADD: {
+						calculate.doOperation(calcul_display, 1);
+
+						break;
+					}
+					case KeyEvent.VK_SUBTRACT: {
+						calculate.doOperation(calcul_display, 2);
+
+						break;
+					}
+					case KeyEvent.VK_MULTIPLY: {
+						calculate.doOperation(calcul_display, 3);
+						
+						break;
+					}
+					case KeyEvent.VK_DIVIDE: {
+						calculate.doOperation(calcul_display, 4);
+						
+						break;
+					}
+					case KeyEvent.VK_ENTER: {
+						calculate.doOperation(calcul_display, 0);
+						
+						break;
+					}
+					default:
+
+					}
 				}
 
 			}
