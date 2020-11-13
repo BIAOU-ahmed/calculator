@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -51,12 +52,13 @@ public class CalculatorFrame {
 		panel.add(panel_solar);
 
 		JPanel display_panel = new JPanel();
-		display_panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+		display_panel.setBackground(Color.LIGHT_GRAY);
 		display_panel.setBounds(20, 88, 419, 81);
 		panel.add(display_panel);
 		display_panel.setLayout(new BorderLayout(0, 0));
 
 		JLabel calcul_display = new JLabel("");
+		calcul_display.setFont(new Font("Tahoma", Font.BOLD, 26));
 		calcul_display.setBackground(Color.WHITE);
 		calcul_display.setHorizontalAlignment(SwingConstants.RIGHT);
 		display_panel.add(calcul_display);
@@ -128,7 +130,7 @@ public class CalculatorFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!calculate.isOn) {
 					calculate.setOn(true);
-					display_panel.setBackground(Color.green);
+					display_panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 
 				}
 				btnMemorieShow.requestFocus();
@@ -177,11 +179,7 @@ public class CalculatorFrame {
 		JButton btn_pct = new JButton("%");
 		btn_pct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!calcul_display.getText().isEmpty()) {
-					Double d = Double.parseDouble(calcul_display.getText()) / 100;
-
-					calcul_display.setText("" + d);
-				}
+				calculate.cheickTypeMonoOperator(calcul_display,2);
 				btnMemorieShow.requestFocus();
 			}
 		});
@@ -193,11 +191,8 @@ public class CalculatorFrame {
 		btn_racine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (!calcul_display.getText().isEmpty()) {
-					Double d = Math.sqrt(Double.parseDouble(calcul_display.getText()));
+				calculate.cheickTypeMonoOperator(calcul_display,1);
 
-					calcul_display.setText("" + d);
-				}
 				btnMemorieShow.requestFocus();
 			}
 		});
@@ -306,6 +301,7 @@ public class CalculatorFrame {
 		panel_buttons.add(btn_addition);
 
 		JButton btn_soustration = new JButton("-");
+		btn_soustration.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btn_soustration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculate.doOperation(calcul_display, 2);
@@ -317,7 +313,7 @@ public class CalculatorFrame {
 		panel_buttons.add(btn_soustration);
 
 		JButton btn_result = new JButton("=");
-		btn_result.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btn_result.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btn_result.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -342,64 +338,24 @@ public class CalculatorFrame {
 		btn_0.setBounds(10, 278, 73, 55);
 		panel_buttons.add(btn_0);
 
-		JButton btn_point = new JButton(".");
-		btn_point.addActionListener(new ActionListener() {
+		JButton btn_dot = new JButton(".");
+		btn_dot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (calculate.isOn()) {
-
-					if (calculate.isOperatorPressed()) {
-
-						calcul_display.setText("");
-					}
-
-					String value = calcul_display.getText();
-					if (calcul_display.getText().indexOf('.') == -1) {
-						value = calcul_display.getText() + btn_point.getText();
-						if (calcul_display.getText().isEmpty()) {
-							value = "0" + btn_point.getText();
-						}
-
-						if (calculate.isOperatorPressed()) {
-
-							value = "0.";
-						}
-					}
-					calculate.setOperatorPressed(false);
-					calcul_display.setText(value);
-				}
+				calculate.addDot(calcul_display);
 
 				btnMemorieShow.requestFocus();
 			}
 		});
-		btn_point.setBackground(Color.LIGHT_GRAY);
-		btn_point.setBounds(93, 278, 73, 55);
-		panel_buttons.add(btn_point);
+		btn_dot.setBackground(Color.LIGHT_GRAY);
+		btn_dot.setBounds(93, 278, 73, 55);
+		panel_buttons.add(btn_dot);
 
 		JButton btn_signe = new JButton("+/-");
 		btn_signe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (calculate.isOn()) {
-					String value = calcul_display.getText();
-					if (calcul_display.getText().indexOf('-') == -1) {
-						value = "-";
-						if (!calculate.isOperatorPressed()) {
-
-							value = "-" + calcul_display.getText();
-						}
-
-					} else {
-						value = "-";
-						if (!calculate.isOperatorPressed()) {
-
-							value = calcul_display.getText().replace("-", "");
-						}
-
-					}
-					calculate.setOperatorPressed(false);
-					calcul_display.setText(value);
-				}
+				calculate.addSigne(calcul_display);
 				btnMemorieShow.requestFocus();
 			}
 		});
@@ -434,6 +390,7 @@ public class CalculatorFrame {
 
 						if (Integer.parseInt(number) >= 0 || Integer.parseInt(number) <= 9) {
 							calculate.addNumber(calcul_display, number);
+							
 						}
 
 					} catch (Exception e2) {
@@ -465,6 +422,11 @@ public class CalculatorFrame {
 					}
 					case KeyEvent.VK_ENTER: {
 						calculate.doOperation(calcul_display, 0);
+						
+						break;
+					}
+					case KeyEvent.VK_DECIMAL: {
+						calculate.addDot(calcul_display);
 						
 						break;
 					}
