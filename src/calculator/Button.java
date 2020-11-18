@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  * @author ahmed
  *
  */
-public class Button   {
+public class Button {
 
 	JButton btnNewButton;
 	JLabel calcul_display;
@@ -48,13 +48,13 @@ public class Button   {
 
 		operator = operand;
 		if (x == 259 && y == 218) {
-			System.out.println("in plus");
+//			System.out.println("in plus");
 			size = 123;
 		}
 
 		this.panel_calcul = panel_calcul;
 		this.calculate = calculate;
-		System.out.println(command);
+//		System.out.println(command);
 		this.calcul_display = calcul_display;
 		btnNewButton = new JButton(value);
 		choice = command;
@@ -72,13 +72,13 @@ public class Button   {
 			btnNewButton.addActionListener(new OperandListener());
 		} else if (command.equals("3")) {
 			btnNewButton.addActionListener(new MonoOperandListener());
-		}else if (command.equals("0")) {
+		} else if (command.equals("0")) {
 			btnNewButton.addActionListener(new Memories());
-		}else if (command.equals("1")) {
+		} else if (command.equals("1")) {
 			btnNewButton.addActionListener(new ResetOn());
-		}else if (command.equals("5")) {
+		} else if (command.equals("5")) {
 			btnNewButton.addActionListener(new Dot());
-		}else if (command.equals("6")) {
+		} else if (command.equals("6")) {
 			btnNewButton.addActionListener(new Signe());
 		}
 		panel_2.add(btnNewButton);
@@ -100,7 +100,7 @@ public class Button   {
 
 //	@Override
 //	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 
 //		System.out.println("command " + choice);
 //		if (choice.equals("0")) {
@@ -218,7 +218,26 @@ public class Button   {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+
 			calculate.doOperation(calcul_display, operator);
+			
+			if(!btnNewButton.getText().equals("=")) {
+				calculate.number = 0;
+			}
+			
+			
+			calcul_display.requestFocus();
+
+		}
+
+	}
+
+	class EqualsListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			calculate.doOperation(calcul_display, calculate.getCurrentOperator());
 			calcul_display.requestFocus();
 
 		}
@@ -236,52 +255,56 @@ public class Button   {
 		}
 
 	}
+
 	class Memories implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(operator+"opera");
+			System.out.println(operator + "opera");
 			calculate.memorieValue(calcul_display, operator);
 			calcul_display.requestFocus();
-			
+
 		}
-		
+
 	}
+
 	class ResetOn implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(operator+"opera");
-			calculate.resetOn(calcul_display,panel_calcul, operator);
+			System.out.println(operator + "opera");
+			calculate.resetOn(calcul_display, panel_calcul, operator);
 			calcul_display.requestFocus();
-			
+
 		}
-		
+
 	}
+
 	class Dot implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(operator+"opera");
+			System.out.println(operator + "opera");
 			calculate.addDot(calcul_display);
 			calcul_display.requestFocus();
-			
+
 		}
-		
+
 	}
+
 	class Signe implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(operator+"opera");
+			System.out.println(operator + "opera");
 			calculate.addSigne(calcul_display);
 			calcul_display.requestFocus();
-			
+
 		}
-		
+
 	}
 }

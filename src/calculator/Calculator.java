@@ -1,7 +1,5 @@
 package calculator;
 
-
-
 import java.awt.Font;
 import java.util.Arrays;
 
@@ -18,11 +16,14 @@ public class Calculator {
 	boolean isOn = false;
 
 	int currentOperator = 0;
-	String result="0";
+//	int newMemoriesOperator = 0;
+	String result = "0";
 	boolean operatorPressed = false;
 	double memorieValue = 0;
 	boolean isValueInMemorie = false;
-	
+	double number = 0;
+	boolean equalPressed = false;
+
 	public Calculator() {
 
 	}
@@ -83,25 +84,88 @@ public class Calculator {
 		this.operatorPressed = operatorPressed;
 	}
 
+	/**
+	 * @return the memorieValue
+	 */
+	public double getMemorieValue() {
+		return memorieValue;
+	}
+
+	/**
+	 * @param memorieValue the memorieValue to set
+	 */
+	public void setMemorieValue(double memorieValue) {
+		this.memorieValue = memorieValue;
+	}
+
+	/**
+	 * @return the isValueInMemorie
+	 */
+	public boolean isValueInMemorie() {
+		return isValueInMemorie;
+	}
+
+	/**
+	 * @param isValueInMemorie the isValueInMemorie to set
+	 */
+	public void setValueInMemorie(boolean isValueInMemorie) {
+		this.isValueInMemorie = isValueInMemorie;
+	}
+
 	public void operation(JLabel calcul_display, int newOperator) {
-		operatorPressed = true;
+
+		if (newOperator != 0) {
+			setOperatorPressed(true);
+			
+		}
+	
+		System.out.println("current result "+result);
 		System.out.println(currentOperator);
-		Double d=(double) 0;
-		if(currentOperator!=0) {
+		Double d = (double) 0;
+		if (currentOperator != 0) {
 			d = Double.parseDouble(result);
 		}
-		
-		
-		double number = 0;
-		try {
-			number = Double.parseDouble(calcul_display.getText());
-		} catch (Exception e) {
-			// TODO: handle exception
+
+//		if (newOperator != 0) {
+//
+//			number = 0;
+//
+//		}
+
+		System.out.println("number" + number + "et new operateur" + currentOperator);
+		if (!equalPressed) {
+
+			try {
+				System.out.println("in equals");
+				number = Double.parseDouble(calcul_display.getText());
+				equalPressed = false;
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
-		
+		if (equalPressed&&operatorPressed) {
+			
+			number = Double.parseDouble(calcul_display.getText());
+			currentOperator=0;
+		}
+
+		if (newOperator == 0) {
+
+			equalPressed = true;
+
+		} else {
+			equalPressed = false;
+		}
+	
+//		if(!equalPressed) {
+//			
+//			currentOperator=0;
+//		}
+		System.out.println("number" + number + "et new operateur" + currentOperator);
 		switch (currentOperator) {
 		case 0: {
-			d =  Double.parseDouble(calcul_display.getText());
+			d = number;
+
 			break;
 		}
 		case 1: {
@@ -109,99 +173,43 @@ public class Calculator {
 			break;
 		}
 		case 2: {
-			 d -=  number;
+			d -= number;
 			break;
 		}
 		case 3: {
-			d *=number;
+			d *= number;
 			break;
 		}
 		case 4: {
-			 d /=number;
+			d /= number;
 			break;
 		}
 		default:
 			System.out.println("error");
 		}
-		
-		result = "" + d;
-		cheickType(calcul_display, newOperator);
-	}
 
-//	public void resume(JLabel calcul_display, int newOperator) {
-//
-//		System.out.println(result + "0 debut");
-//
-//		result = "" + Double.parseDouble(calcul_display.getText());
-//
-//		System.out.println(result);
-//		cheickType(calcul_display, newOperator);
-//
-//		System.out.println(result + "0 fin");
-//	}
-//
-//	public void addition(JLabel calcul_display, int newOperator) {
-//
-//		System.out.println(result + "1");
-//		double number = 0;
-//		try {
-//			number = Double.parseDouble(calcul_display.getText());
-//		} catch (Exception e) {
-//			// TODO: handle exception
+		System.out.println("beffor: new =" + newOperator + "and current = " + currentOperator);
+
+		result = "" + d;
+		
+		cheickType(calcul_display,newOperator);
+
+//		if(currentOperator==0) {
+//			newMemoriesOperator = currentOperator;
+			System.out.println("et memorie operateur" + currentOperator);
 //		}
-//		
-//		Double d = Double.parseDouble(result) + number;
-//		result = "" + d;
-//
-//		cheickType(calcul_display, newOperator);
-//	}
-//
-//	public void subtraction(JLabel calcul_display, int newOperator) {
-//		double number = 0;
-//		try {
-//			number = Double.parseDouble(calcul_display.getText());
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		Double d = Double.parseDouble(result) - number;
-//		result = "" + d;
-//		cheickType(calcul_display, newOperator);
-//	}
-//
-//	public void division(JLabel calcul_display, int newOperator) {
-//
-//		double number = 0;
-//		try {
-//			number = Double.parseDouble(calcul_display.getText());
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		Double d = Double.parseDouble(result) /number;
-//		result = "" + d;
-//
-//		calcul_display.setFont(new Font("Tahoma", Font.BOLD, 26));
-//		cheickType(calcul_display, newOperator);
-//	}
-//
-//	public void multiplication(JLabel calcul_display, int newOperator) {
-//
-//		double number = 0;
-//		try {
-//			number = Double.parseDouble(calcul_display.getText());
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		Double d = Double.parseDouble(result) *number;
-//		result = "" + d;
-//
-//		cheickType(calcul_display, newOperator);
-//	}
+		
+		System.out.println("new =" + newOperator + "and current = " + currentOperator);
+
+		System.out.println("pressed "+ equalPressed);
+
+		System.out.println("equals pressed ?" + equalPressed);
+	}
 
 	public void cheickType(JLabel calcul_display, int newOperator) {
 
-		
 		try {
-			
+
 			result = makeInt(result);
 			calcul_display.setText(result);
 			changeCurrentOpe(newOperator);
@@ -210,102 +218,127 @@ public class Calculator {
 			result = "0";
 			calcul_display.setText("Nous ne pouvons pas diviser par zéro");
 			currentOperator = 0;
+			setOperatorPressed(true);
 
 		}
 
-		
-		
-
 	}
-	
-	public void cheickTypeMonoOperator(JLabel calcul_display,int operator) {
-		
+
+	public void cheickTypeMonoOperator(JLabel calcul_display, int operator) {
+
 		if (!calcul_display.getText().isEmpty()) {
-			
-			
-			if(!isOperatorPressed()||getCurrentOperator()==0) {
-				Double d =null;
-				if(operator==1) {
+
+			if (!isOperatorPressed() || getCurrentOperator() == 0) {
+				Double d = null;
+				if (operator == 1) {
 					d = Math.sqrt(Double.parseDouble(calcul_display.getText()));
+					
+					if(equalPressed) {
+						System.out.println("in this equals");
+						result=""+d;
+						
+					}else {
+						number=d;
+					}
+					
 				}
-				
-				if(operator==2) {
+
+				if (operator == 2) {
 					d = Double.parseDouble(calcul_display.getText()) / 100;
+					if(equalPressed) {
+						System.out.println("in this equals");
+						result=""+d;
+						
+					}else {
+						number=d;
+					}
 				}
-				
-				String newValue = ""+d;
-				
+
+				String newValue = "" + d;
+
 				try {
 					calcul_display.setText(makeInt(newValue));
-					
-					
+
 				} catch (ArrayIndexOutOfBoundsException f) {
 					calcul_display.setFont(new Font("Tahoma", Font.BOLD, 18));
-					
+
 					setOperatorPressed(true);
 					currentOperator = 0;
 					calcul_display.setText("Entrée non valide");
 
 				}
-				
+
 			}
-		
-			
-			
-			
-			
+
 		}
-		
+
 	}
 
 	public String makeInt(String number) {
-		
+
 		String value = number.replace(".", ",");
 		String[] arrOfStr = value.split(",");
 		System.out.println(Arrays.toString(arrOfStr));
 		if (arrOfStr[1].equals("0")) {
-			
-			number=arrOfStr[0];
+
+			number = arrOfStr[0];
 		}
-		
+
 		return number;
 	}
+
 	public void changeCurrentOpe(int newOperator) {
 
-		currentOperator = newOperator;
-
+		if (newOperator != 0) {
+			
+			currentOperator = newOperator;
+		}
+		
+		
 	}
-	
-	public void addNumber(JLabel calcul_display, String number) {
+
+	public void addNumber(JLabel calcul_display, String numberAdd) {
 		if (isOn()) {
-			if (calcul_display.getText().equals("0")) {
+			if (calcul_display.getText().equals("0")||equalPressed) {
 				calcul_display.setText("");
+				number = (double) 0;
+				result="0";
+				currentOperator=0;
 			}
 
-			String value = number;
+			String value = numberAdd;
 			if (!isOperatorPressed()) {
-
-				value = calcul_display.getText() + number;
+				
+				value = calcul_display.getText() + numberAdd;
 			}
 			setOperatorPressed(false);
+			equalPressed = false;
 			calcul_display.setText(value);
 		}
 	}
-	
+
 	public void doOperation(JLabel calcul_display, int newOperator) {
 		if (isOn()) {
 			if (!result.equals("") || !calcul_display.getText().isEmpty()) {
 
 				if (!isOperatorPressed()) {
+//					if(currentOperator!=0) {
+//						
+//					}
+					
 					operation(calcul_display, newOperator);
+					
 				} else {
-					currentOperator = newOperator;
+					
+						currentOperator = newOperator;
+					
+					
 				}
 			}
 
 		}
 	}
-	
+
 	public void addSigne(JLabel calcul_display) {
 		if (isOn()) {
 			String value = calcul_display.getText();
@@ -328,7 +361,7 @@ public class Calculator {
 			calcul_display.setText(value);
 		}
 	}
-	
+
 	public void addDot(JLabel calcul_display) {
 		if (isOn()) {
 
@@ -353,14 +386,15 @@ public class Calculator {
 			calcul_display.setText(value);
 		}
 	}
-	
-	public void memorieValue(JLabel calcul_display,int action) {
+
+	public void memorieValue(JLabel calcul_display, int action) {
 		if (isOn()) {
 			switch (action) {
 			case 0: {
-				
+
 				if (isValueInMemorie) {
-					calcul_display.setText(makeInt(""+memorieValue));
+					calcul_display.setText(makeInt("" + memorieValue));
+					setOperatorPressed(false);
 					System.out.println(memorieValue);
 				}
 				break;
@@ -380,22 +414,21 @@ public class Calculator {
 			default:
 				System.out.println("erreur");
 			}
-			
 
 		}
 	}
-	
-	public void resetOn(JLabel calcul_display,JPanel panel_calcul,int action) {
-		
+
+	public void resetOn(JLabel calcul_display, JPanel panel_calcul, int action) {
+
 		if (!isOn()) {
 			setOn(true);
 			// display_panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_calcul.setBackground(UIManager.getColor("Table.selectionBackground"));
 		}
 		if (isOn()) {
-			calcul_display.setText("");			
+			calcul_display.setText("");
 		}
-		if(action==1) {
+		if (action == 1) {
 			setResult("");
 			setCurrentOperator(0);
 		}
