@@ -112,6 +112,36 @@ public class Calculator {
 		this.isValueInMemorie = isValueInMemorie;
 	}
 
+	
+	
+	/**
+	 * @return the number
+	 */
+	public double getNumber() {
+		return number;
+	}
+
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(double number) {
+		this.number = number;
+	}
+
+	/**
+	 * @return the equalPressed
+	 */
+	public boolean isEqualPressed() {
+		return equalPressed;
+	}
+
+	/**
+	 * @param equalPressed the equalPressed to set
+	 */
+	public void setEqualPressed(boolean equalPressed) {
+		this.equalPressed = equalPressed;
+	}
+
 	public void operation(JLabel calcul_display, int newOperator) {
 
 		if (newOperator != 0) {
@@ -126,13 +156,7 @@ public class Calculator {
 			d = Double.parseDouble(result);
 		}
 
-//		if (newOperator != 0) {
-//
-//			number = 0;
-//
-//		}
 
-		System.out.println("number" + number + "et new operateur" + currentOperator);
 		if (!equalPressed) {
 
 			try {
@@ -157,10 +181,7 @@ public class Calculator {
 			equalPressed = false;
 		}
 	
-//		if(!equalPressed) {
-//			
-//			currentOperator=0;
-//		}
+
 		System.out.println("number" + number + "et new operateur" + currentOperator);
 		switch (currentOperator) {
 		case 0: {
@@ -188,22 +209,10 @@ public class Calculator {
 			System.out.println("error");
 		}
 
-		System.out.println("beffor: new =" + newOperator + "and current = " + currentOperator);
-
 		result = "" + d;
 		
 		cheickType(calcul_display,newOperator);
 
-//		if(currentOperator==0) {
-//			newMemoriesOperator = currentOperator;
-			System.out.println("et memorie operateur" + currentOperator);
-//		}
-		
-		System.out.println("new =" + newOperator + "and current = " + currentOperator);
-
-		System.out.println("pressed "+ equalPressed);
-
-		System.out.println("equals pressed ?" + equalPressed);
 	}
 
 	public void cheickType(JLabel calcul_display, int newOperator) {
@@ -233,27 +242,21 @@ public class Calculator {
 				if (operator == 1) {
 					d = Math.sqrt(Double.parseDouble(calcul_display.getText()));
 					
-					if(equalPressed) {
-						System.out.println("in this equals");
-						result=""+d;
-						
-					}else {
-						number=d;
-					}
 					
 				}
 
 				if (operator == 2) {
 					d = Double.parseDouble(calcul_display.getText()) / 100;
-					if(equalPressed) {
-						System.out.println("in this equals");
-						result=""+d;
-						
-					}else {
-						number=d;
-					}
+					
 				}
 
+				if(equalPressed) {
+					
+					result=""+d;
+					
+				}else {
+					number=d;
+				}
 				String newValue = "" + d;
 
 				try {
@@ -312,7 +315,7 @@ public class Calculator {
 				value = calcul_display.getText() + numberAdd;
 			}
 			setOperatorPressed(false);
-			equalPressed = false;
+			setEqualPressed(false);
 			calcul_display.setText(value);
 		}
 	}
@@ -322,16 +325,12 @@ public class Calculator {
 			if (!result.equals("") || !calcul_display.getText().isEmpty()) {
 
 				if (!isOperatorPressed()) {
-//					if(currentOperator!=0) {
-//						
-//					}
-					
+
 					operation(calcul_display, newOperator);
 					
 				} else {
 					
-						currentOperator = newOperator;
-					
+						currentOperator = newOperator;				
 					
 				}
 			}
@@ -341,6 +340,10 @@ public class Calculator {
 
 	public void addSigne(JLabel calcul_display) {
 		if (isOn()) {
+			if (isEqualPressed()) {
+
+				result="0";
+			}
 			String value = calcul_display.getText();
 			if (calcul_display.getText().indexOf('-') == -1) {
 				value = "-";
@@ -357,6 +360,7 @@ public class Calculator {
 				}
 
 			}
+			setEqualPressed(false);
 			setOperatorPressed(false);
 			calcul_display.setText(value);
 		}
@@ -365,7 +369,7 @@ public class Calculator {
 	public void addDot(JLabel calcul_display) {
 		if (isOn()) {
 
-			if (isOperatorPressed()) {
+			if (isOperatorPressed()||isEqualPressed()) {
 
 				calcul_display.setText("");
 			}
@@ -383,6 +387,7 @@ public class Calculator {
 				}
 			}
 			setOperatorPressed(false);
+			setEqualPressed(false);
 			calcul_display.setText(value);
 		}
 	}
@@ -395,6 +400,7 @@ public class Calculator {
 				if (isValueInMemorie) {
 					calcul_display.setText(makeInt("" + memorieValue));
 					setOperatorPressed(false);
+					number=memorieValue;
 					System.out.println(memorieValue);
 				}
 				break;
@@ -408,6 +414,9 @@ public class Calculator {
 			case 2: {
 				memorieValue -= Double.parseDouble(calcul_display.getText());
 				isValueInMemorie = true;
+				if(memorieValue==0) {
+					isValueInMemorie = false;
+				}
 				System.out.println(memorieValue);
 				break;
 			}
@@ -433,19 +442,6 @@ public class Calculator {
 			setCurrentOperator(0);
 		}
 	}
-//	public void addMemorieValu(JLabel calcul_display) {
-//		if (isOn()) {
-//			memorieValue += Double.parseDouble(calcul_display.getText());
-//			isValueInMemorie = true;
-//			System.out.println(memorieValue);
-//		}
-//	}
-//	public void substractMemorieValu(JLabel calcul_display) {
-//		if (isOn) {
-//			memorieValue -= Double.parseDouble(calcul_display.getText());
-//			isValueInMemorie = true;
-//			System.out.println(memorieValue);
-//		}
-//	}
+
 
 }

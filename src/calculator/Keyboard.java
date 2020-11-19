@@ -49,68 +49,7 @@ public class Keyboard implements KeyListener {
 
 				try {
 					numberPressed(Integer.parseInt(number));
-				
-//				if (Integer.parseInt(number) == 0) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[20].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 1) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[15].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 2) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[16].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 3) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[17].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 4) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[10].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 5) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[11].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 6) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[12].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 7) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[5].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 8) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[6].getBtnNewButton().doClick();
-//
-//				}
-//				if (Integer.parseInt(number) == 9) {
-////					calculate.addNumber(calcul_display, number);
-////					btnNewButton.doClick();
-//					newButton[7].getBtnNewButton().doClick();
-//
-//				}
-//
+
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}
@@ -119,22 +58,22 @@ public class Keyboard implements KeyListener {
 			System.out.println(key + "et" + KeyEvent.VK_ADD);
 			switch (key) {
 			case KeyEvent.VK_ADD: {
-//				calculate.doOperation(calcul_display, 1);
+
 				newButton[18].getBtnNewButton().doClick();
 				break;
 			}
 			case KeyEvent.VK_SUBTRACT: {
-//				calculate.doOperation(calcul_display, 2);
+
 				newButton[19].getBtnNewButton().doClick();
 				break;
 			}
 			case KeyEvent.VK_MULTIPLY: {
-//				calculate.doOperation(calcul_display, 3);
+
 				newButton[13].getBtnNewButton().doClick();
 				break;
 			}
 			case KeyEvent.VK_DIVIDE: {
-//				calculate.doOperation(calcul_display, 4);
+
 				newButton[14].getBtnNewButton().doClick();
 				break;
 			}
