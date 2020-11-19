@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  * @author ahmed
@@ -14,31 +15,32 @@ import javax.swing.JButton;
  */
 public class Keyboard implements KeyListener {
 
-	
 	Button[] newButton;
+	JLabel calcul_display;
+
 //	Calculate calculate;
-	public Keyboard(Button[] newButton) {
+	public Keyboard(Button[] newButton, JLabel calcul_display) {
 		// TODO Auto-generated constructor stub
 		this.newButton = newButton;
+		this.calcul_display = calcul_display;
 //		this.calculate = calculate;
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
-		 //TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		 //TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stub
+
 		int key = e.getKeyCode();
 		String number = "" + e.getKeyChar();
 
 		System.out.println(number);
-		System.out.println("key"+key);
+		System.out.println("key" + key);
 		if (key == KeyEvent.VK_0 || key == KeyEvent.VK_NUMPAD0 || key == KeyEvent.VK_1 || key == KeyEvent.VK_NUMPAD1
 				|| key == KeyEvent.VK_2 || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_3
 				|| key == KeyEvent.VK_NUMPAD3 || key == KeyEvent.VK_4 || key == KeyEvent.VK_NUMPAD4
@@ -47,14 +49,14 @@ public class Keyboard implements KeyListener {
 				|| key == KeyEvent.VK_7 || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_9
 				|| key == KeyEvent.VK_NUMPAD9) {
 
-				try {
-					numberPressed(Integer.parseInt(number));
+			try {
+				numberPressed(Integer.parseInt(number));
 
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}
 
-		}else {
+		} else {
 			System.out.println(key + "et" + KeyEvent.VK_ADD);
 			switch (key) {
 			case KeyEvent.VK_ADD: {
@@ -87,21 +89,30 @@ public class Keyboard implements KeyListener {
 				newButton[21].getBtnNewButton().doClick();
 				break;
 			}
+			case KeyEvent.VK_BACK_SPACE: {
+//				calculate.addDot(calcul_display);
+				String str = calcul_display.getText();
+
+				if (str != null && str.length() > 0) {
+					str = str.substring(0, str.length() - 1);
+				}
+				calcul_display.setText(str);
+				break;
+			}
+
 			default:
 
 			}
 		}
-		
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		 //TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub
+
 	}
 
-	
 	public void numberPressed(int number) {
 		switch (number) {
 		case 0:

@@ -168,7 +168,7 @@ public class Calculator {
 			}
 		}
 		if (equalPressed&&operatorPressed) {
-			
+			System.out.println("inr ");
 			number = Double.parseDouble(calcul_display.getText());
 			currentOperator=0;
 		}
@@ -182,7 +182,7 @@ public class Calculator {
 		}
 	
 
-		System.out.println("number" + number + "et new operateur" + currentOperator);
+		System.out.println("number" + number + "et new operateur" + newOperator+"et current est "+ currentOperator);
 		switch (currentOperator) {
 		case 0: {
 			d = number;
@@ -330,7 +330,14 @@ public class Calculator {
 					
 				} else {
 					
-						currentOperator = newOperator;				
+					if(newOperator==0) {
+						operation(calcul_display, currentOperator);
+						setEqualPressed(true);
+						setOperatorPressed(false);
+					}else {
+						currentOperator = newOperator;
+					}
+										
 					
 				}
 			}
