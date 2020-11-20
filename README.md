@@ -1,2 +1,2 @@
 # calculator
-[GitHub](src/Calculator.png)
+[GitHub](src/Calculator.png?raw=true)
