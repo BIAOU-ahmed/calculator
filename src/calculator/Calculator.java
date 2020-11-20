@@ -23,6 +23,7 @@ public class Calculator {
 	boolean isValueInMemorie = false;
 	double number = 0;
 	boolean equalPressed = false;
+	boolean specialEqualPressed = false;
 
 	public Calculator() {
 
@@ -112,8 +113,6 @@ public class Calculator {
 		this.isValueInMemorie = isValueInMemorie;
 	}
 
-	
-	
 	/**
 	 * @return the number
 	 */
@@ -146,17 +145,26 @@ public class Calculator {
 
 		if (newOperator != 0) {
 			setOperatorPressed(true);
-			
+
 		}
-	
-		System.out.println("current result "+result);
+
+		System.out.println("current result " + result);
 		System.out.println(currentOperator);
 		Double d = (double) 0;
 		if (currentOperator != 0) {
 			d = Double.parseDouble(result);
 		}
+		System.out.println("zqual pressed " + equalPressed + " and operator pressed " + operatorPressed);
 
-
+		
+		System.out.println("number beffor change " + number);
+		System.out.println("special equals "+specialEqualPressed);
+		if(specialEqualPressed) {
+			equalPressed=true;
+			result=calcul_display.getText();
+			d = Double.parseDouble(result);
+			specialEqualPressed=false;
+		}
 		if (!equalPressed) {
 
 			try {
@@ -165,12 +173,22 @@ public class Calculator {
 				equalPressed = false;
 			} catch (Exception e) {
 				// TODO: handle exception
+				System.out.println(e);
 			}
 		}
-		if (equalPressed&&operatorPressed) {
+//		System.out.println("number inter change " + number);
+//		if (!equalPressed &&currentOperator!=0&& newOperator==0) {
+//			System.out.println("changement");
+//			String intvalue = "" + number;
+//			number = Double.parseDouble(result);
+//			result = intvalue;
+//
+//		}
+		System.out.println("number afetr change " + number);
+		if (equalPressed && operatorPressed) {
 			System.out.println("inr ");
 			number = Double.parseDouble(calcul_display.getText());
-			currentOperator=0;
+			currentOperator = 0;
 		}
 
 		if (newOperator == 0) {
@@ -180,9 +198,9 @@ public class Calculator {
 		} else {
 			equalPressed = false;
 		}
-	
 
-		System.out.println("number" + number + "et new operateur" + newOperator+"et current est "+ currentOperator);
+		System.out.println("resultat " + result + " number " + number + " et new operateur " + newOperator
+				+ " et current est " + currentOperator);
 		switch (currentOperator) {
 		case 0: {
 			d = number;
@@ -208,10 +226,19 @@ public class Calculator {
 		default:
 			System.out.println("error");
 		}
+		System.out.println("resultat " + result + " number " + number + " et new operateur " + newOperator
+				+ " et current est " + currentOperator);
+//		if (equalPressed && !operatorPressed) {
+//			if (!result.isEmpty()) {
+//				System.out.println("change number");
+//				number = Double.parseDouble(result);
+//			}
+//
+//		}
 
 		result = "" + d;
-		
-		cheickType(calcul_display,newOperator);
+
+		cheickType(calcul_display, newOperator);
 
 	}
 
@@ -241,21 +268,20 @@ public class Calculator {
 				Double d = null;
 				if (operator == 1) {
 					d = Math.sqrt(Double.parseDouble(calcul_display.getText()));
-					
-					
+
 				}
 
 				if (operator == 2) {
 					d = Double.parseDouble(calcul_display.getText()) / 100;
-					
+
 				}
 
-				if(equalPressed) {
-					
-					result=""+d;
-					
-				}else {
-					number=d;
+				if (equalPressed) {
+
+					result = "" + d;
+
+				} else {
+					number = d;
 				}
 				String newValue = "" + d;
 
@@ -293,25 +319,30 @@ public class Calculator {
 	public void changeCurrentOpe(int newOperator) {
 
 		if (newOperator != 0) {
-			
+
 			currentOperator = newOperator;
 		}
-		
-		
+
 	}
 
 	public void addNumber(JLabel calcul_display, String numberAdd) {
 		if (isOn()) {
-			if (calcul_display.getText().equals("0")||equalPressed) {
+			if (calcul_display.getText().equals("0") || equalPressed) {
 				calcul_display.setText("");
-				number = (double) 0;
-				result="0";
-				currentOperator=0;
+				if (!equalPressed) {
+					number = 0;
+					specialEqualPressed=false;
+				}else {
+					specialEqualPressed=true;
+					System.out.println("in the not");
+				}
+				result = "0";
+//				currentOperator = 0;
 			}
 
 			String value = numberAdd;
 			if (!isOperatorPressed()) {
-				
+
 				value = calcul_display.getText() + numberAdd;
 			}
 			setOperatorPressed(false);
@@ -327,19 +358,20 @@ public class Calculator {
 				if (!isOperatorPressed()) {
 
 					operation(calcul_display, newOperator);
-					
+
 				} else {
-					
-					if(newOperator==0) {
+
+					if (newOperator == 0) {
 						operation(calcul_display, currentOperator);
 						setEqualPressed(true);
 						setOperatorPressed(false);
-					}else {
+
+					} else {
 						currentOperator = newOperator;
 					}
-										
-					
+
 				}
+				specialEqualPressed=false;
 			}
 
 		}
@@ -349,7 +381,7 @@ public class Calculator {
 		if (isOn()) {
 			if (isEqualPressed()) {
 
-				result="0";
+				result = "0";
 			}
 			String value = calcul_display.getText();
 			if (calcul_display.getText().indexOf('-') == -1) {
@@ -376,7 +408,7 @@ public class Calculator {
 	public void addDot(JLabel calcul_display) {
 		if (isOn()) {
 
-			if (isOperatorPressed()||isEqualPressed()) {
+			if (isOperatorPressed() || isEqualPressed()) {
 
 				calcul_display.setText("");
 			}
@@ -407,7 +439,7 @@ public class Calculator {
 				if (isValueInMemorie) {
 					calcul_display.setText(makeInt("" + memorieValue));
 					setOperatorPressed(false);
-					number=memorieValue;
+					number = memorieValue;
 					System.out.println(memorieValue);
 				}
 				break;
@@ -421,7 +453,7 @@ public class Calculator {
 			case 2: {
 				memorieValue -= Double.parseDouble(calcul_display.getText());
 				isValueInMemorie = true;
-				if(memorieValue==0) {
+				if (memorieValue == 0) {
 					isValueInMemorie = false;
 				}
 				System.out.println(memorieValue);
@@ -445,10 +477,10 @@ public class Calculator {
 			calcul_display.setText("");
 		}
 		if (action == 1) {
+			equalPressed=false;
 			setResult("");
 			setCurrentOperator(0);
 		}
 	}
-
 
 }
