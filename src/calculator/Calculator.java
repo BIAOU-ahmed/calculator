@@ -1,7 +1,6 @@
 package calculator;
 
 import java.awt.Font;
-import java.util.Arrays;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +15,6 @@ public class Calculator {
 	boolean isOn = false;
 
 	int currentOperator = 0;
-//	int newMemoriesOperator = 0;
 	String result = "0";
 	boolean operatorPressed = false;
 	double memorieValue = 0;
@@ -25,9 +23,7 @@ public class Calculator {
 	boolean equalPressed = false;
 	boolean specialEqualPressed = false;
 
-	public Calculator() {
-
-	}
+	
 
 	/**
 	 * @return the isOn
@@ -141,6 +137,15 @@ public class Calculator {
 		this.equalPressed = equalPressed;
 	}
 
+	public void afterOperation() {
+		
+	}
+	
+	/**
+	 * this is the part that do all calculate it check the operand and do the calculate asked
+	 * @param calcul_display
+	 * @param newOperator
+	 */
 	public void operation(JLabel calcul_display, int newOperator) {
 
 		if (newOperator != 0) {
@@ -148,45 +153,38 @@ public class Calculator {
 
 		}
 
-		System.out.println("current result " + result);
-		System.out.println(currentOperator);
+		
 		Double d = (double) 0;
+		
+		//check if the result is ask or not
 		if (currentOperator != 0) {
 			d = Double.parseDouble(result);
 		}
-		System.out.println("zqual pressed " + equalPressed + " and operator pressed " + operatorPressed);
-
-		
-		System.out.println("number beffor change " + number);
-		System.out.println("special equals "+specialEqualPressed);
+	
+		//check if the number is pressed after the equals button was pressed
 		if(specialEqualPressed) {
 			equalPressed=true;
 			result=calcul_display.getText();
 			d = Double.parseDouble(result);
 			specialEqualPressed=false;
 		}
+		//check if the equals button was pressed
 		if (!equalPressed) {
 
 			try {
-				System.out.println("in equals");
+		
 				number = Double.parseDouble(calcul_display.getText());
 				equalPressed = false;
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 				System.out.println(e);
 			}
 		}
-//		System.out.println("number inter change " + number);
-//		if (!equalPressed &&currentOperator!=0&& newOperator==0) {
-//			System.out.println("changement");
-//			String intvalue = "" + number;
-//			number = Double.parseDouble(result);
-//			result = intvalue;
-//
-//		}
-		System.out.println("number afetr change " + number);
+
+		
+	
 		if (equalPressed && operatorPressed) {
-			System.out.println("inr ");
+			
 			number = Double.parseDouble(calcul_display.getText());
 			currentOperator = 0;
 		}
@@ -199,8 +197,7 @@ public class Calculator {
 			equalPressed = false;
 		}
 
-		System.out.println("resultat " + result + " number " + number + " et new operateur " + newOperator
-				+ " et current est " + currentOperator);
+	//does the operations according to the operand
 		switch (currentOperator) {
 		case 0: {
 			d = number;
@@ -226,29 +223,24 @@ public class Calculator {
 		default:
 			System.out.println("error");
 		}
-		System.out.println("resultat " + result + " number " + number + " et new operateur " + newOperator
-				+ " et current est " + currentOperator);
-//		if (equalPressed && !operatorPressed) {
-//			if (!result.isEmpty()) {
-//				System.out.println("change number");
-//				number = Double.parseDouble(result);
-//			}
-//
-//		}
-
+	
 		result = "" + d;
 
 		cheickType(calcul_display, newOperator);
 
 	}
 
+	//check if the result is valid or not
 	public void cheickType(JLabel calcul_display, int newOperator) {
 
 		try {
 
 			result = makeInt(result);
 			calcul_display.setText(result);
-			changeCurrentOpe(newOperator);
+			if (newOperator != 0) {
+
+				currentOperator = newOperator;
+			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			calcul_display.setFont(new Font("Tahoma", Font.BOLD, 18));
 			result = "0";
@@ -260,6 +252,8 @@ public class Calculator {
 
 	}
 
+	
+	//do the mono operation
 	public void cheickTypeMonoOperator(JLabel calcul_display, int operator) {
 
 		if (!calcul_display.getText().isEmpty()) {
@@ -303,11 +297,11 @@ public class Calculator {
 
 	}
 
+	//check if the result is of type integer or not
 	public String makeInt(String number) {
 
 		String value = number.replace(".", ",");
 		String[] arrOfStr = value.split(",");
-		System.out.println(Arrays.toString(arrOfStr));
 		if (arrOfStr[1].equals("0")) {
 
 			number = arrOfStr[0];
@@ -316,15 +310,7 @@ public class Calculator {
 		return number;
 	}
 
-	public void changeCurrentOpe(int newOperator) {
-
-		if (newOperator != 0) {
-
-			currentOperator = newOperator;
-		}
-
-	}
-
+//allow the user to add a new number
 	public void addNumber(JLabel calcul_display, String numberAdd) {
 		if (isOn()) {
 			if (calcul_display.getText().equals("0") || equalPressed) {
@@ -334,10 +320,8 @@ public class Calculator {
 					specialEqualPressed=false;
 				}else {
 					specialEqualPressed=true;
-					System.out.println("in the not");
 				}
 				result = "0";
-//				currentOperator = 0;
 			}
 
 			String value = numberAdd;
@@ -350,7 +334,7 @@ public class Calculator {
 			calcul_display.setText(value);
 		}
 	}
-
+//check if operator was pressed and do operation if yes
 	public void doOperation(JLabel calcul_display, int newOperator) {
 		if (isOn()) {
 			if (!result.equals("") || !calcul_display.getText().isEmpty()) {
@@ -377,6 +361,7 @@ public class Calculator {
 		}
 	}
 
+	//change the sign of the number
 	public void addSigne(JLabel calcul_display) {
 		if (isOn()) {
 			if (isEqualPressed()) {
@@ -405,6 +390,7 @@ public class Calculator {
 		}
 	}
 
+	//add dot to the number 
 	public void addDot(JLabel calcul_display) {
 		if (isOn()) {
 
@@ -431,7 +417,8 @@ public class Calculator {
 		}
 	}
 
-	public void memorieValue(JLabel calcul_display, int action) {
+	//Manages the memory value
+	public void memoryValue(JLabel calcul_display, int action) {
 		if (isOn()) {
 			switch (action) {
 			case 0: {
@@ -440,14 +427,12 @@ public class Calculator {
 					calcul_display.setText(makeInt("" + memorieValue));
 					setOperatorPressed(false);
 					number = memorieValue;
-					System.out.println(memorieValue);
 				}
 				break;
 			}
 			case 1: {
 				memorieValue += Double.parseDouble(calcul_display.getText());
 				isValueInMemorie = true;
-				System.out.println(memorieValue);
 				break;
 			}
 			case 2: {
@@ -456,7 +441,6 @@ public class Calculator {
 				if (memorieValue == 0) {
 					isValueInMemorie = false;
 				}
-				System.out.println(memorieValue);
 				break;
 			}
 			default:
@@ -466,6 +450,7 @@ public class Calculator {
 		}
 	}
 
+	//reset the screen
 	public void resetOn(JLabel calcul_display, JPanel panel_calcul, int action) {
 
 		if (!isOn()) {

@@ -1,27 +1,14 @@
 package calculator;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import calculator.Button;
-import calculator.Calculator;
-
 import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Arrays;
 import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 
 public class CalculatorFrame {
@@ -70,7 +57,8 @@ public class CalculatorFrame {
 		panel_button.setLayout(null);
 
 		
-
+		 //This is the part that create the value off all my buttons in a table
+		
 		String values[] = { "MRC", "M+", "M-", "CE", "ON-C", "7", "8", "9", "%", "\u221A", "4", "5", "6", "X", "\u00F7", "1", "2", "3","+", "-", "0", ".", "+/-", "=" };
 		String[] command = { "0", "0", "0", "1", "1","2","2","2","3","3","2","2","2","4","4","2","2","2","4","4","2", "5", "6","4" };
 		int[] operand = { 0,1 , 2, 0, 1, 0, 0, 0, 2, 1, 0,0, 0, 3, 4, 0, 0, 0,1, 2, 0, 0, 0, 0 };
@@ -78,6 +66,8 @@ public class CalculatorFrame {
 		int x = 10;
 		int y = 11;
 		int nbcolunn = 0;
+		
+		//it's the loop that creates all my buttons
 		for (int i = 0; i < newButton.length; i++) {
 
 			
@@ -103,7 +93,7 @@ public class CalculatorFrame {
 		calcul_display.addKeyListener(new Keyboard(newButton,calcul_display) );
 
 	
-		frame.setVisible(true);
+		
 	
 
 	}

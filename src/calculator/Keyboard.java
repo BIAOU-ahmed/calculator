@@ -5,8 +5,6 @@ package calculator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -18,12 +16,17 @@ public class Keyboard implements KeyListener {
 	Button[] newButton;
 	JLabel calcul_display;
 
-//	Calculate calculate;
+	/**
+	 * keyboard constructor
+	 * 
+	 * @param newButton
+	 * @param calcul_display
+	 */
 	public Keyboard(Button[] newButton, JLabel calcul_display) {
-		// TODO Auto-generated constructor stub
+
 		this.newButton = newButton;
 		this.calcul_display = calcul_display;
-//		this.calculate = calculate;
+
 	}
 
 	@Override
@@ -34,13 +37,10 @@ public class Keyboard implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 		int key = e.getKeyCode();
 		String number = "" + e.getKeyChar();
 
-		System.out.println(number);
-		System.out.println("key" + key);
 		if (key == KeyEvent.VK_0 || key == KeyEvent.VK_NUMPAD0 || key == KeyEvent.VK_1 || key == KeyEvent.VK_NUMPAD1
 				|| key == KeyEvent.VK_2 || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_3
 				|| key == KeyEvent.VK_NUMPAD3 || key == KeyEvent.VK_4 || key == KeyEvent.VK_NUMPAD4
@@ -53,11 +53,11 @@ public class Keyboard implements KeyListener {
 				numberPressed(Integer.parseInt(number));
 
 			} catch (Exception e2) {
-				// TODO: handle exception
+
 			}
 
 		} else {
-			System.out.println(key + "et" + KeyEvent.VK_ADD);
+		
 			switch (key) {
 			case KeyEvent.VK_ADD: {
 
@@ -80,17 +80,17 @@ public class Keyboard implements KeyListener {
 				break;
 			}
 			case KeyEvent.VK_ENTER: {
-//				calculate.doOperation(calcul_display, 0);
+
 				newButton[23].getBtnNewButton().doClick();
 				break;
 			}
 			case KeyEvent.VK_DECIMAL: {
-//				calculate.addDot(calcul_display);
+
 				newButton[21].getBtnNewButton().doClick();
 				break;
 			}
 			case KeyEvent.VK_BACK_SPACE: {
-//				calculate.addDot(calcul_display);
+				// this part is to delete the last number pressed
 				String str = calcul_display.getText();
 
 				if (str != null && str.length() > 0) {
@@ -113,6 +113,10 @@ public class Keyboard implements KeyListener {
 
 	}
 
+	/**
+	 * Method to do a click according of the number pressed on the keyboard
+	 * @param number
+	 */
 	public void numberPressed(int number) {
 		switch (number) {
 		case 0:
